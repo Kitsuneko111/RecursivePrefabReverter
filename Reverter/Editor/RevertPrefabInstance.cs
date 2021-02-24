@@ -41,12 +41,17 @@ public class RevertPrefabInstance : UnityEditor.Editor
             return;
         if (IsAPrefabNotYetReverted(obj, ref prefabsAlreadyReverted))
         {
+            //Debug.Log(obj);
             revertedCount++;
-            PrefabUtility.RevertPrefabInstance(obj, InteractionMode.UserAction);
+            PrefabUtility.RevertObjectOverride(obj.transform, InteractionMode.UserAction);
         }
         Transform trans = obj.transform;
         for (int i = 0; i < trans.childCount; i++)
+        {
+            //Debug.Log(trans.GetChild(i));
             RecursiveRevertPrefabInstances(trans.GetChild(i).gameObject, ref revertedCount, ref prefabsAlreadyReverted);
+
+        }
     }
 
     /// <summary>
@@ -54,9 +59,10 @@ public class RevertPrefabInstance : UnityEditor.Editor
     /// </summary>
     static bool IsAPrefabNotYetReverted(GameObject obj, ref Dictionary<UnityEngine.Object, bool> prefabsAlreadyReverted)
     {
+        Debug.Log(obj);
         bool wasValidAtEitherLevel = false;
         UnityEngine.Object prefab;
-        prefab = PrefabUtility.GetPrefabInstanceHandle(obj);
+        prefab = PrefabUtility.GetCorrespondingObjectFromSource(obj);
         if (prefab != null && !prefabsAlreadyReverted.ContainsKey(prefab))
         {
             wasValidAtEitherLevel = true;
