@@ -11,3 +11,9 @@ Original credit goes to http://answers.unity.com/answers/1178041/view.html
 + Turned into an import tool rather than a standalone script
 - removed recursion up
 ```
+
+## Instructions
+1. Import the .unitypackage into your project
+2. Select the highest level object you wish to revert
+3. `Ctrl+Alt+Shift+R` or click tools at the top to run the program
+4. Watch as the object and all child objects are reverted
